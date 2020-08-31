@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import img from '../image/user8-128x128.jpg';
 import {Redirect, Route, Switch} from "react-router";
 import Dashboard from "./Dashboard";
-import {BrowserRouter, NavLink, useLocation} from "react-router-dom";
+import {BrowserRouter, NavLink} from "react-router-dom";
 import Users from "./Users";
-import Chart from "./Chart";
+import Posts from "./Posts";
+import ShowPost from "./ShowPost";
 
 
 class Menu extends Component {
@@ -18,11 +19,17 @@ class Menu extends Component {
             activeMenu: value
         })
     }
-
+componentWillMount() {
+    let address_page = window.location.pathname;
+    if(address_page === "/dashboard"){
+        this.activeMenu('dashboard')
+    }
+    if(address_page === "/users"){
+        this.activeMenu('users')
+    }
+}
 
     render() {
-        console.log(window.location.pathname);
-        let address_page = window.location.pathname;
 
 
         return (
@@ -31,7 +38,8 @@ class Menu extends Component {
                     <Route exact path='/dashboard' component={Dashboard}/>
                     <Route exact path="/"><Redirect to="/dashboard"/></Route>
                     <Route exact path='/users' component={Users}/>
-                    <Route exact path='/chart' component={Chart}/>
+                    <Route exact path='/posts' component={Posts}/>
+                    <Route exact path='/showpost/:id' component={ShowPost}/>
                 </Switch>
 
                 <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -77,34 +85,28 @@ class Menu extends Component {
                                             </p>
                                         </NavLink>
                                     </li>
-                                    <li className={this.state.activeMenu !== 'chart' ? 'nav-item has-treeview' : "nav-item has-treeview menu-open"}>
+                                    <li className={this.state.activeMenu !== 'post' ? 'nav-item has-treeview' : "nav-item has-treeview menu-open"}>
                                         <NavLink to="#"
-                                                 className={this.state.activeMenu === 'chart' ? 'nav-link active' : 'nav-link'}
-                                                 onClick={this.activeMenu.bind(this, 'chart')}>
+                                                 className={this.state.activeMenu === 'post' ? 'nav-link active' : 'nav-link'}
+                                                 onClick={this.activeMenu.bind(this, 'post')}>
                                             <i className="nav-icon fa fa-pie-chart"/>
                                             <p>
-                                                چارت‌ها
+                                                مطالب
                                                 <i className="right fa fa-angle-left"/>
                                             </p>
                                         </NavLink>
-                                        <ul className={this.state.activeMenu !== 'chart' ? 'fade' : "nav nav-treeview"}>
+                                        <ul className={this.state.activeMenu !== 'post' ? 'fade' : "nav nav-treeview"}>
                                             <li className="nav-item">
                                                 <NavLink to="chart" className="nav-link">
                                                     <i className="fa fa-circle-o nav-icon"/>
-                                                    <p>نمودار ChartJS</p>
+                                                    <p>مطلب جدید</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="pages/charts/flot.html" className="nav-link">
+                                                <NavLink to="/posts" className="nav-link">
                                                     <i className="fa fa-circle-o nav-icon"/>
-                                                    <p>نمودار Flot</p>
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="pages/charts/inline.html" className="nav-link">
-                                                    <i className="fa fa-circle-o nav-icon"/>
-                                                    <p>نمودار Inline</p>
-                                                </a>
+                                                    <p>پست ها</p>
+                                                </NavLink>
                                             </li>
                                         </ul>
                                     </li>

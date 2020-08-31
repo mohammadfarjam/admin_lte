@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
-class Chart extends Component {
+class ShowPost extends Component {
     render() {
         return (
             <div className='content-wrapper p-2'>
-                <h2>page chart</h2>
+                <h4>page show post</h4>
             </div>
         );
     }
 }
 
-export default Chart;
+export default ShowPost;
